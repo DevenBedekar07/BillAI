@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>BillAI — Intelligent Invoice Analysis</title>
+    <meta
+        name="description"
+        content="AI-powered invoice and bill analysis using OCR, validation, and anomaly detection."
+    >
+
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+    <div class="app-shell">
+
+        <!-- Navigation -->
+        <header class="navbar">
+            <div class="brand">
+                <div class="brand-mark">B</div>
+                <span>BillAI</span>
+            </div>
+
+            <nav class="nav-links">
+                <a href="#dashboard">Dashboard</a>
+                <a href="#analysis">Analysis</a>
+                <a href="#about">About</a>
+            </nav>
+
+            <div class="status-pill">
+                <span class="status-dot"></span>
+                AI Engine Online
+            </div>
+        </header>
+
+
+        <!-- Main -->
+        <main id="dashboard">
+
+            <!-- Hero -->
+            <section class="hero">
+                <div class="eyebrow">
+                    <span>AI-POWERED</span>
+                    INVOICE INTELLIGENCE
+                </div>
+
+                <h1>
+                    Turn bills into
+                    <span>actionable intelligence.</span>
+                </h1>
+
+                <p>
+                    Upload an invoice and let BillAI extract,
+                    validate, and analyze it automatically.
+                </p>
+            </section>
+
+
+            <!-- Upload Card -->
+            <section class="upload-section">
+
+                <div class="upload-card" id="uploadCard">
+
+                    <div class="upload-icon">
+                        ↑
+                    </div>
+
+                    <h2>Analyze an invoice</h2>
+
+                    <p>
+                        Drag and drop your invoice here, or choose a file
+                    </p>
+
+                    <span class="file-types">
+                        JPG · PNG · WEBP · Max 10 MB
+                    </span>
+
+                    <input
+                        type="file"
+                        id="invoiceInput"
+                        accept=".jpg,.jpeg,.png,.webp"
+                        hidden
+                    >
+
+                    <button
+                        class="primary-button"
+                        id="chooseButton"
+                    >
+                        Choose Invoice
+                    </button>
+
+                    <div
+                        class="selected-file"
+                        id="selectedFile"
+                        hidden
+                    ></div>
+
+                    <button
+                        class="analyze-button"
+                        id="analyzeButton"
+                        hidden
+                    >
+                        Analyze Bill →
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- Loading -->
+            <section
+                class="loading-section"
+                id="loadingSection"
+                hidden
+            >
+                <div class="loader"></div>
+
+                <h3>Analyzing your invoice...</h3>
+
+                <p>
+                    Running OCR, field extraction, validation and anomaly detection.
+                </p>
+            </section>
+
+
+            <!-- Results -->
+            <section
+                class="results-section"
+                id="analysis"
+                hidden
+            >
+
+                <div class="section-heading">
+                    <div>
+                        <span class="section-label">ANALYSIS RESULT</span>
+                        <h2>Invoice intelligence</h2>
+                    </div>
+
+                    <button
+                        class="secondary-button"
+                        id="newAnalysisButton"
+                    >
+                        + New Analysis
+                    </button>
+                </div>
+
+
+                <!-- Overview -->
+                <div class="overview-grid">
+
+                    <div class="info-card">
+                        <span class="card-label">VENDOR</span>
+                        <strong id="vendorName">—</strong>
+                    </div>
+
+                    <div class="info-card">
+                        <span class="card-label">BILL NUMBER</span>
+                        <strong id="billNumber">—</strong>
+                    </div>
+
+                    <div class="info-card">
+                        <span class="card-label">BILL DATE</span>
+                        <strong id="billDate">—</strong>
+                    </div>
+
+                    <div class="info-card amount-card">
+                        <span class="card-label">PAYABLE AMOUNT</span>
+                        <strong id="payableAmount">—</strong>
+                    </div>
+
+                </div>
+
+
+                <!-- Amount breakdown -->
+                <div class="analysis-grid">
+
+                    <div class="panel">
+                        <div class="panel-header">
+                            <span>Financial Breakdown</span>
+                        </div>
+
+                        <div class="amount-row">
+                            <span>Total Amount</span>
+                            <strong id="totalAmount">—</strong>
+                        </div>
+
+                        <div class="amount-row">
+                            <span>GST</span>
+                            <strong id="gstAmount">—</strong>
+                        </div>
+
+                        <div class="amount-row">
+                            <span>Discount</span>
+                            <strong id="discountAmount">—</strong>
+                        </div>
+
+                        <div class="amount-row">
+                            <span>Round Off</span>
+                            <strong id="roundOff">—</strong>
+                        </div>
+
+                        <div class="amount-row total-row">
+                            <span>Payable</span>
+                            <strong id="financialPayable">—</strong>
+                        </div>
+                    </div>
+
+
+                    <!-- Validation -->
+                    <div class="panel validation-panel">
+
+                        <div class="panel-header">
+                            <span>Validation</span>
+
+                            <span
+                                class="result-badge"
+                                id="validationBadge"
+                            >
+                                —
+                            </span>
+                        </div>
+
+                        <div id="validationMessage">
+                            No validation result yet.
+                        </div>
+
+                        <div
+                            class="issues-list"
+                            id="validationIssues"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Anomaly -->
+                <div class="anomaly-card">
+
+                    <div>
+                        <span class="card-label">
+                            ANOMALY DETECTION
+                        </span>
+
+                        <h3 id="anomalyStatus">
+                            —
+                        </h3>
+
+                        <p>
+                            Machine-learning based invoice anomaly assessment.
+                        </p>
+                    </div>
+
+                    <div class="anomaly-score">
+                        <span>ANOMALY SCORE</span>
+                        <strong id="anomalyScore">—</strong>
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+
+        <!-- Footer -->
+        <footer id="about">
+            <span>BillAI</span>
+            <span>Intelligent Invoice Analysis Platform</span>
+        </footer>
+
+    </div>
+
+    <script src="/static/app.js"></script>
+
+</body>
+</html>

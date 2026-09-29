@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+*.pyc
+.git/
+.gitignore
+.vscode/
+tests/
+sample_data/
+billai.db
+*.jpg
+*.jpeg
+*.png
+*.webp
+.env
